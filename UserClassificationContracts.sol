@@ -1,8 +1,8 @@
 pragma solidity >=0.7.0 <0.9.0;
 
 /** 
- * @title Ballot
- * @dev Implements voting process along with vote delegation
+ * @title UserClassificationContracts
+ * @dev Implements a energy class process for energy generation
  */
 contract UserClassificationContracts {
    
@@ -34,7 +34,7 @@ contract UserClassificationContracts {
     }
     address public newuseraddress;
     string  public newusername;
-    bool devicetypes; 
+    bool public devicetypes; 
       
     mapping(address => EnergyUser) public energyusers;
     mapping(address => NonRenewableEnergyUser) public renewalenergyusers;
@@ -43,15 +43,19 @@ contract UserClassificationContracts {
     EnergyUser[] public enusers;
     RenewableEnergyUser[] public rnusers;
     NonRenewableEnergyUser[] public nrusers;
+    string[] public usernameslist;
     /** 
      * @dev Create a new user, get their information  and list them in newusername'.
      * @param _newusername and _devicetype
      */
-    constructor(string[]  memory _newusername, bool _devicetype)   {
-          for (uint i = 0; i < _newusername.length; i++) {
+    constructor(string memory _newusername, bool _devicetype)   {
+           
+      
+          for (uint i = 0; i < usernameslist.length; i++) {
+          usernameslist.push(_newusername);
         newuseraddress = msg.sender;
-        newusername =_newusername[i];
-        _devicetype = true;
+        newusername =_newusername;
+       
         devicetypes = _devicetype; 
         
        
@@ -60,10 +64,10 @@ contract UserClassificationContracts {
             // appends it to the end of 'proposals'.
             enusers.push(EnergyUser({
                 
-               name:_newusername[i], // name of the user
+               name:_newusername, // name of the user
                usernumbercount: i, // index of user number count
                userid: msg.sender,
-               status: true,  // currently a non-renewable user
+               status: _devicetype,  // currently a non-renewable user
                useraddress: newuseraddress // person address
            
                 
@@ -79,7 +83,7 @@ contract UserClassificationContracts {
                    if(devicetypes == true){
         for (uint i = 0; i < rnusers.length; i++) {
              
-            nonrenewalenergyusers[newuseraddress].usernumbercount = i;
+            renewalenergyusers[newuseraddress].usernumbercount = i;
             // 'Proposal({...})' creates a temporary
             // Proposal object and 'proposals.push(...)'
             // appends it to the end of 'proposals'.
@@ -106,7 +110,7 @@ contract UserClassificationContracts {
                    {
             for (uint i = 0; i < nrusers.length; i++) {
              
-            renewalenergyusers[newuseraddress].usernumbercount = i;
+            nonrenewalenergyusers[newuseraddress].usernumbercount = i;
             // 'Proposal({...})' creates a temporary
             // Proposal object and 'proposals.push(...)'
             // appends it to the end of 'proposals'.
@@ -128,10 +132,6 @@ contract UserClassificationContracts {
     }
 }
     
-    /** 
-     * @dev Give 'voter' the right to vote on this ballot. May only be called by 'chairperson'.
-     * @param voter address of voter
-     */
     
     
    
