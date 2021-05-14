@@ -19,7 +19,7 @@ contract SubscriptionContract {
     struct DistributedEnergyResource {
          address deviceid ; // id of devices
          string  devicename; // name of the device
-        uint amountofenergyconsumed; // amount of energy consumed by device per year
+        // amount of energy consumed by device per year
          uint devicecapacity;   // amount of energy held by device
         bool renewableornot ;  // currently a renewable device or not
         bool registered; // registered or not
@@ -129,9 +129,9 @@ contract SubscriptionContract {
     
      
      
-     event registernewdeviceevent(address deviceidevent, string  devicenameevent, uint amountofenergyconsumedevent, uint devicecapacityevent,bool renewableornotevent, bool registeredevent);
+     event registernewdeviceevent(address deviceidevent, string  devicenameevent,  uint devicecapacityevent,bool renewableornotevent, bool registeredevent);
     
-    function registernewdevice(address deviceid, string memory devicename, uint amountofenergyconsumed, uint devicecapacity,bool renewableornot,bool registered ) public returns (address _deviceid, string memory  _devicename, uint _amountofenergyconsumed, uint _devicecapacity,bool _renewableornot,bool _registered){
+    function registernewdevice(address deviceid, string memory devicename,  uint devicecapacity,bool renewableornot,bool registered ) public returns (address _deviceid, string memory  _devicename,  uint _devicecapacity,bool _renewableornot,bool _registered){
 
                 DistributedEnergyResource storage registeringnewdevice = distributedEnergyResources[deviceid];
         require(registeringnewdevice.registered == false, "You already registered");
@@ -145,7 +145,7 @@ contract SubscriptionContract {
        
                deviceid:deviceid, // unique id  of the device
                devicename: devicename, // name of device given
-               amountofenergyconsumed: amountofenergyconsumed, // amount of energy consumed by device
+               // amount of energy consumed by device
                devicecapacity: devicecapacity,  // capacity of device
                renewableornot: true, // is device a renewable energy source or not
                registered: true, // is the device registered or not 
@@ -158,8 +158,8 @@ contract SubscriptionContract {
         }
           
           
-            emit registernewdeviceevent(deviceid,   devicename,  amountofenergyconsumed,  devicecapacity, renewableornot, registered);  
-        return(deviceid,   devicename,  amountofenergyconsumed,  devicecapacity, renewableornot, registered );
+            emit registernewdeviceevent(deviceid,   devicename,   devicecapacity, renewableornot, registered);  
+        return(deviceid,   devicename,    devicecapacity, renewableornot, registered );
     }
     
     
